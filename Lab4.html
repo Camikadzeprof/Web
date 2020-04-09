@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        div {
+            background-color: #cbb;
+            width: 100px;
+            border: 1px solid green;
+        }
+        #div {
+            background-color: white;
+            border: 4px solid red;
+            width: 15.5in;
+            height: 5in;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+</head>
+<body>
+    <button id="go">Кнопка</button>
+
+    <div id="div"><div id="block">Поехали</div></div>
+    <script>
+    $("#go").click(function ()
+    {
+      $("#block").animate(
+      {
+        marginLeft: "5in",
+              marginTop: "1.5in",
+          }, 1500,"linear");
+      $("#block").animate(
+      {
+        marginLeft: "8in",
+              marginTop: "1in",
+          }, 1500,"linear");
+      $("#block").animate(
+      {
+        marginLeft: "10.5in",
+              marginTop: "3in",
+          }, 1500,"linear");
+      $("#block").animate(
+      {
+        marginLeft: "12.5in",
+              marginTop: "2.5in",
+          }, 1500,"linear");
+      $("#block").animate(
+      {
+        marginLeft: "15.5in",
+              marginTop: "5in",
+          }, 1500,"linear");
+    });
+    </script>
+</body>
+</html>

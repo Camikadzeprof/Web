@@ -1,0 +1,141 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Добавление и редактирование коментариев</title>
+<script Language="JavaScript">
+function XmlHttp()
+{
+    var xmlhttp;
+try{xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");}
+catch(e)
+{
+ try {xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");} 
+ catch (E) {xmlhttp = false;}
+}
+if (!xmlhttp && typeof XMLHttpRequest!='undefined')
+{
+ xmlhttp = new XMLHttpRequest();
+}
+  return xmlhttp;
+}
+let edid=0;
+function edit(id)
+{
+    document.getElementById("formadd").hidden=true;
+    document.getElementById("formedit").hidden=false;
+    document.getElementById("area3").value='\0';
+    edid=id;
+}
+function edit1(param)
+{
+    if (window.XMLHttpRequest) req = new XmlHttp();
+    method=(!param.method ? "POST" : param.method.toUpperCase());
+
+
+        send="";
+        for (var i in param.data) send+= i+"="+param.data[i]+"&";
+
+
+    req.open(method, param.url, true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.send(send);
+    req.onreadystatechange = function()
+    {
+        if (req.readyState == 4 && req.status == 200)
+        {
+            edit2(req.responseText);
+        }
+    }
+    document.getElementById("formedit").hidden=true;
+    document.getElementById("formadd").hidden=false;
+}
+function edit2(data)
+{
+    var j=0;
+    var time="";
+    var nick="";
+    for(var i in document.getElementById("com0").innerHTML)
+    {
+        if(document.getElementById("com0").innerHTML[i]!='\n') time+=document.getElementById("com0").innerHTML[i];
+        else
+        {
+            i++;
+            j=i;
+            break;
+        }
+    }
+    for(var i in document.getElementById("com0").innerHTML)
+    {
+        if((document.getElementById("com0").innerHTML[i]!='\n')&&(i>=j))
+        {
+            nick+=document.getElementById("com0").innerHTML[i];
+        }
+        else
+        {
+            if(i>=j) break;
+        }
+    }
+    document.getElementById("com0").innerHTML=time+'\n'+nick+'\n'+data;
+}
+let count = 0;
+function add(data)
+{
+    document.getElementById("status").innerHTML+="<div id='com"+count+"'>"+data+"<input type='button' value='Редактировать' onclick='edit(com"+count+")'></div>\n";
+}
+function ajax(param)
+{
+                if (window.XMLHttpRequest) req = new XmlHttp();
+                method=(!param.method ? "POST" : param.method.toUpperCase());
+ 
+
+
+                               send="";
+                               for (var i in param.data) send+= i+"="+param.data[i]+"&";
+
+
+                req.open(method, param.url, true);
+                req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                req.send(send);
+                req.onreadystatechange = function()
+                {
+                               if (req.readyState == 4 && req.status == 200)
+                               {
+                                               add(req.responseText);
+                                               count++;
+                               }
+                }
+}
+</script>
+</head>
+<body>
+<div id="status" style="width:470px;background:#fff;padding:20px 10px 20px 10px;border:solid 5px #D1D1D1;font: 13 Arial;"></div>
+<br>
+                <form action="get_ajax.php" id="formadd">
+                <p><b>Оставьте ваш комментарий</b></p>
+                <p><textarea id="area1" name="area1" style="height:50px; width:500px;padding:10px;font: 13 Arial;">Введите имя</textarea></p>
+                <p><textarea id="area2" name="area1" style="height:100px; width:500px;padding:10px;font: 13 Arial;">Текст сообщения</textarea></p>
+                <input type='button' id="save" value='Сохранить комментарий' onclick='
+                               ajax({
+                                         url:"get_ajax.php",
+                                         statbox:"status",
+                                         method:"POST",
+                                         data:
+                                         {
+                                             first_area:document.getElementById("area1").value,
+                                             second_area:document.getElementById("area2").value
+                                         },
+                               })'
+                >
+                </form>
+                <form action="edit.php" id="formedit" hidden>
+                    <p><textarea id="area3" name="area2" STYLE="height:50px; width:500px;padding:10px;font: 13 Arial;"></textarea></p>
+                    <input type="button" id="ed" value="Изменить комментарий" onclick="
+                            edit1({
+                                        url:'edit.php',
+                                        statbox:'com0',
+                                        method:'POST',
+                                        data:{third_area:document.getElementById('area3').value}
+                            })">
+                </form>
+</body>
+</html>
