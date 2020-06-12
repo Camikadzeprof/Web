@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="jQuery.js"></script>
+    <script>
+        var info = '[{"a":5},{"a":13},{"a":1},{"a":7},{"a":10},{"a":6}]';
+        var min=0;
+        var max=0;
+        function minmax() {
+            var arr=JSON.parse(info);
+            for(var i = 0;i < arr.length; i++) {
+                if(arr[i]["a"] < min || min == 0) min = arr[i]["a"];
+                if(arr[i]["a"] > max || max == 0) max = arr[i]["a"]
+            }
+            document.getElementById("minmax").innerHTML = "min=" + min + "; max=" + max + ";";
+        }
+        function rebuild() {
+            var saves = null;
+            var n = 0;
+            var arr=JSON.parse(info);
+            for(var i = 0; i < arr.length; i++) {
+                if (((arr[i]["a"] == min) || (arr[i]["a"] == max)) && (saves == null)) {
+                    saves = arr[i];
+                    n = i;
+                } else {
+                    if (((arr[i]["a"] == min) || (arr[i]["a"] == max)) && (saves != null)) {
+                        arr[n] = arr[i];
+                        arr[i] = saves;
+                    }
+                }
+            }
+            for(var i = 0; i < arr.length; i++) {
+                for (key in arr[i]) {
+                    if (arr[i].hasOwnProperty(key))
+                        document.getElementById("rebuild").innerHTML += key + " : " + arr[i][key] + "\n";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<h3>min max</h3>
+<div id="minmax"></div>
+<input type="button" value="MinMax" onclick="minmax()" />
+<h3>переделанный массив</h3>
+<div id="rebuild"></div>
+<input type="button" value="Rebuild" onclick="rebuild()" />
+</body>
+</html>

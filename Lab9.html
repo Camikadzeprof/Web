@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="jQuery.js"></script>
+    <script>
+            var numbers = [127,25,32,47,65];
+            var numbersTo2 = [];
+            var numbersFrom2 = [];
+
+            for (var i = 0; i < numbers.length; i++) {
+                numbersTo2.push(numbers[i].toString(2));
+            }
+
+            for (var i = 0; i < numbersTo2.length; i++) {
+                numbersFrom2.push(parseInt(numbersTo2[i], 2));
+            }
+
+            alert(numbers);
+            alert(numbersTo2);
+            alert(numbersFrom2);
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Lab6</title>
+        <script>
+            var user = {
+                name: "Vasya",
+                age: 25
+            };
+            function press() {
+                document.getElementById("name").innerHTML = JSON.stringify(user, ["name", "age"]);
+            }
+        </script>
+    </head>
+    <body>
+        <div type="text" id="name"></div>
+        <input type="button" id="sh" value="Show" onclick="press()"/>
+    </body>
+</html>
